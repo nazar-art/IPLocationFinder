@@ -18,26 +18,19 @@ public class GeoIPServiceTest {
 
     @BeforeMethod(groups = "SOAP_GROUP")
     public void setUp() throws Exception {
-        log.info("GeoIPServiceTest set up called");
         geoIPService = new GeoIPService();
-        serviceSoap = geoIPService.getGeoIPServiceSoap();
-        log.info("set up finished");
     }
 
     @Test(groups = "SOAP_GROUP", description = "check country name for USA and UK")
     @Parameters( {"googleIpAddress", "bbcIpAddress" })
     public void testGetGeoIPServiceSoap(String googleIpAddress, String bbcIpAddress) throws Exception {
         log.info("test testGetGeoIPServiceSoap() started");
+        serviceSoap = geoIPService.getGeoIPServiceSoap();
         geoIP = serviceSoap.getGeoIP(googleIpAddress);
         Assert.assertTrue(geoIP.getCountryName().equalsIgnoreCase(UNITED_STATES), "country code isn't correct for " + UNITED_STATES);
 
         geoIP = serviceSoap.getGeoIP(bbcIpAddress);
         Assert.assertTrue(geoIP.getCountryName().equalsIgnoreCase(UNITED_KINGDOM), "country code isn't correct for " + UNITED_KINGDOM);
         log.info("test testGetGeoIPServiceSoap() runned successful");
-    }
-
-//    @Test
-    public void testGetGeoIPServiceHttpPost() throws Exception {
-
     }
 }
